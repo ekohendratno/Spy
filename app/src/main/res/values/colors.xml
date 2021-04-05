@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3c4b59</color>
+    <color name="colorPrimaryDark">#2D3A46</color>
+    <color name="colorAccent">#fff44336</color>
+
+    <color name="colorToolbar">#fffbfbfb</color>
+
+    <color name="colorWindowBackgroundWhite">#ffffffff</color>
+    <color name="colorWindowBackground">#f2f2f2</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="textColorBlack">#000000</color>
+    <color name="textColorGray">#878787</color>
+    <color name="demo_dark_transparent">#24000000</color>
+
+
+    <color name="gray_color">#cfcfcf</color>
+    <color name="tabSelectedIconColor">#fff44336</color>
+    <color name="tabUnselectedIconColor">#f2f2f2</color>
+    <color name="colorTextThird">#ff5f5f5f</color>
+    <color name="colorTextSecondary">#8a000000</color>
+
+
+    <color name="colorAlfa">#fff44336</color>
+    <color name="colorHeaderBg">#fff7f7f7</color>
+    <color name="colorIzin">#ffffb300</color>
+    <color name="colorMasuk">#ff009688</color>
+    <color name="colorSakit">#ff43a047</color>
+
+    <color name="colorStatusBack">#ff9f9f9f</color>
+
+
+    <color name="text_shadow">#7F000000</color>
+    <color name="text_shadow_white">#FFFFFF</color>
+</resources>

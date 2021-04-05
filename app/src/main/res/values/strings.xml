@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Spy</string>
+    <string name="firebase_email" >eko.hendratno@gmail.com</string>
+    <string name="firebase_password">12345678</string>
+</resources>
