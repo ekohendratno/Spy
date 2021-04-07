@@ -12,7 +12,7 @@ import github.nisrulz.easydeviceinfo.base.RingerMode;
 public class ConfigState {
     private Map<String, String> info = new HashMap<>();
 
-    ConfigState(Context context) {
+    public ConfigState(Context context) {
         EasyConfigMod easyConfigMod = new EasyConfigMod(context);
 
         String deviceRingerMode;

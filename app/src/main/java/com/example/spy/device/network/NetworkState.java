@@ -12,7 +12,7 @@ import github.nisrulz.easydeviceinfo.base.NetworkType;
 public class NetworkState {
     private Map<String, String> info = new HashMap<>();
 
-    NetworkState(Context context) {
+    public NetworkState(Context context) {
         EasyNetworkMod easyNetworkState = new EasyNetworkMod(context);
 
         String networktype;

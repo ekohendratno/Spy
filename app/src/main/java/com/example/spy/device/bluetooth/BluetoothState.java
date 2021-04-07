@@ -13,7 +13,7 @@ import github.nisrulz.easydeviceinfo.base.EasyBluetoothMod;
 public class BluetoothState {
     private Map<String, String> info = new HashMap<>();
 
-    BluetoothState(Context context, String bluetoothName) {
+    public BluetoothState(Context context, String bluetoothName) {
         EasyBluetoothMod easyBluetoothState = new EasyBluetoothMod(context);
         try {
             info.put("MAC", easyBluetoothState.getBluetoothMAC());

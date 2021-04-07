@@ -12,7 +12,7 @@ import github.nisrulz.easydeviceinfo.base.EasyBatteryMod;
 public class BatteryState {
     private Map<String, String> info = new HashMap<>();
 
-    BatteryState(Context context) {
+    public BatteryState(Context context) {
         String batteryHealth;
         EasyBatteryMod easyBatteryMod = new EasyBatteryMod(context);
         switch (easyBatteryMod.getBatteryHealth()) {

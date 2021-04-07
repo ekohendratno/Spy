@@ -11,7 +11,7 @@ import github.nisrulz.easydeviceinfo.base.EasySimMod;
 public class SimState {
     private Map<String, String> info = new HashMap<>();
 
-    SimState(Context context) {
+    public SimState(Context context) {
         EasySimMod easySimMod = new EasySimMod(context);
         try {
             info.put("IMSI", easySimMod.getIMSI());

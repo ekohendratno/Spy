@@ -13,7 +13,7 @@ public class DeviceState {
     private static String DATE_PATERN = "yyyy-MM-dd";
     private Map<String, String> info = new HashMap<>();
 
-    DeviceState(Context context) {
+    public DeviceState(Context context) {
         EasyDeviceMod easyDeviceMod = new EasyDeviceMod(context);
         try {
             info.put("IMEI", easyDeviceMod.getIMEI());

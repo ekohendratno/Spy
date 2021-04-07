@@ -11,7 +11,7 @@ import github.nisrulz.easydeviceinfo.base.EasyMemoryMod;
 public class MemoryState {
     private Map<String, String> info = new HashMap<>();
 
-    MemoryState(Context context) {
+    public MemoryState(Context context) {
         EasyMemoryMod easyMemoryMod = new EasyMemoryMod(context);
         info.put("TOTAL_RAM_MB", String.valueOf(easyMemoryMod.convertToMb(easyMemoryMod.getTotalRAM())));
         info.put("TOTAL_INTERNAL_MEMORY_MB", String.valueOf(easyMemoryMod.convertToMb(easyMemoryMod.getTotalInternalMemorySize())));

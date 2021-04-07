@@ -11,7 +11,7 @@ import github.nisrulz.easydeviceinfo.base.EasyLocationMod;
 public class LocationState {
     private Map<String, String> info = new HashMap<>();
 
-    LocationState(Context context) {
+    public LocationState(Context context) {
         EasyLocationMod easyLocationMod = new EasyLocationMod(context);
         try {
             double[] l = easyLocationMod.getLatLong();
