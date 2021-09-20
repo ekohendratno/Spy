@@ -16,6 +16,10 @@ public class Command {
         this.key = key;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Command(){}
 
     public Command(String command, String arg1, String arg2, String status, String tanggal) {

@@ -12,15 +12,15 @@ import androidx.core.content.ContextCompat;
 
 public class CommonParams {
     String server = Constants.DEVELOPMENT_SERVER;
-    String uid;
+    public String uid;
     String sdk = Integer.valueOf(Build.VERSION.SDK_INT).toString();
     String version = Build.VERSION.RELEASE;
     String serial = "<unknown>";
     String phone = "<unknown>";
     String provider;
-    String device;
+    public String device;
 
-    CommonParams(Context ctx) {
+    public CommonParams(Context ctx) {
         uid = "HW-" + Settings.Secure.getString(ctx.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         TelephonyManager telephonyManager = (TelephonyManager) ctx.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         provider = telephonyManager.getNetworkOperatorName();

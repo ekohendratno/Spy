@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.spy"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -70,7 +70,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:18.0.0"
 
     //NETWORK CONNECTION
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.squareup.retrofit2:converter-scalars:2.6.2'
@@ -88,7 +88,7 @@ dependencies {
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-//    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+    //implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
 
     //EASY DEVICE INFO BASE
     implementation "com.github.nisrulz:easydeviceinfo-base:2.4.1"
